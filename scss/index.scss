@@ -1,0 +1,12 @@
+//Lesson 37: aqui vamos a importar todos los scss::after
+
+// --- COLORS ---
+@import "./color.scss";
+
+// --- LAYOUTS ---
+@import "../layouts/BasicLayout/BasicLayout.scss";
+
+// --- COMPONENTS ---
+@import "../components/Header/Header.scss";
+@import "../components/Header/TopBar/TopBar.scss";
+@import "../components/Header/Menu/Menu.scss";
