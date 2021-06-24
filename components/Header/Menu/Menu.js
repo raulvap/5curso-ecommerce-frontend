@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Container, Menu, Grid, Icon, Label } from "semantic-ui-react";
+
+// --- HOOKS ---
+import useAuth from "../../../hooks/useAuth";
+
+// --- API ---
+import { getMeApi } from "../../../api/user";
 
 // --- COMPONENTS ---
 import BasicModal from "../../Modal/BasicModal";
@@ -9,6 +15,18 @@ import Auth from "../../Auth";
 export default function MenuWeb() {
    const [showModal, setShowModal] = useState(false);
    const [titleModal, setTitleModal] = useState("Iniciar Sesión");
+   const [user, setUser] = useState(undefined);
+
+   // Sacamos del auth la info: (lesson 61)
+   const { auth, logout } = useAuth();
+
+   useEffect(() => {
+      // vamos a hacer una función que se autollame para que sea asyncrono: (lesson 63)
+      (async () => {
+         const response = await getMeApi(logout);
+         setUser(response);
+      })();
+   }, [auth]);
 
    const onShowModal = () => setShowModal(true);
    const onCloseModal = () => setShowModal(false);
@@ -21,7 +39,10 @@ export default function MenuWeb() {
                   <MenuPlatforms />
                </Grid.Column>
                <Grid.Column className="menu__right" width={10}>
-                  <MenuOptions onShowModal={onShowModal} />
+                  {user !== undefined && (
+                     // Si el usuario es diferente a undefined, entonces está loggeado y renderizamos el menu:
+                     <MenuOptions onShowModal={onShowModal} user={user} logout={logout} />
+                  )}
                </Grid.Column>
             </Grid>
          </Container>
@@ -51,13 +72,44 @@ function MenuPlatforms() {
 }
 
 // Menu Usuario
-function MenuOptions({ onShowModal }) {
+function MenuOptions({ onShowModal, user, logout }) {
    return (
       <Menu>
-         <Menu.Item onClick={onShowModal}>
-            <Icon name="user outline" />
-            Mi Cuenta
-         </Menu.Item>
+         {user ? (
+            <>
+               <Link href="/orders">
+                  <Menu.Item as="a">
+                     <Icon name="game" />
+                     Mis Pedidos
+                  </Menu.Item>
+               </Link>
+               <Link href="/wishlist">
+                  <Menu.Item as="a">
+                     <Icon name="heart outline" />
+                     Favoritos
+                  </Menu.Item>
+               </Link>
+               <Link href="/account">
+                  <Menu.Item as="a">
+                     <Icon name="user outline" />
+                     {user.name} {user.lastname}
+                  </Menu.Item>
+               </Link>
+               <Link href="/cart">
+                  <Menu.Item as="a" className="m-0">
+                     <Icon name="cart" />
+                  </Menu.Item>
+               </Link>
+               <Menu.Item onClick={logout} className="m-0">
+                  <Icon name="power off" />
+               </Menu.Item>
+            </>
+         ) : (
+            <Menu.Item onClick={onShowModal}>
+               <Icon name="user outline" />
+               Iniciar Sesión
+            </Menu.Item>
+         )}
       </Menu>
    );
 }
