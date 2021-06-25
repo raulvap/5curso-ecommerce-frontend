@@ -77,3 +77,60 @@ export async function getMeApi(logout) {
       return null;
    }
 }
+
+// Para actualizar info del usuario (lesson 69)
+export async function updateNameApi(idUser, data, logout) {
+   try {
+      const url = `${BASE_PATH}/users/${idUser}`;
+      const params = {
+         method: "PUT",
+         headers: {
+            "Content-Type": "application/json",
+         },
+         body: JSON.stringify(data),
+      };
+      const result = await authFetch(url, params, logout);
+      return result ? result : null;
+   } catch (error) {
+      console.log(error);
+      return null;
+   }
+}
+
+// Para actualizar email del usuario: (lesson 73)
+export async function updateEmailApi(idUser, email, logout) {
+   try {
+      const url = `${BASE_PATH}/users/${idUser}`;
+      const params = {
+         method: "PUT",
+         headers: {
+            "Content-Type": "application/json",
+         },
+         body: JSON.stringify({ email }),
+      };
+      const result = await authFetch(url, params, logout);
+      return result ? result : null;
+   } catch (error) {
+      console.log(error);
+      return null;
+   }
+}
+
+// Para cambiar la contraseña del usuario (lesson 76)
+export async function updatePasswordApi(idUser, password, logout) {
+   try {
+      const url = `${BASE_PATH}/users/${idUser}`;
+      const params = {
+         method: "PUT",
+         headers: {
+            "Content-Type": "application/json",
+         },
+         body: JSON.stringify({ password }),
+      };
+      const result = await authFetch(url, params, logout);
+      return result ? result : null;
+   } catch (error) {
+      console.log(error);
+      return null;
+   }
+}
