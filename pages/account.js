@@ -8,10 +8,14 @@ import useAuth from "../hooks/useAuth";
 import { getMeApi } from "../api/user";
 
 // --- COMPONENTS ---
+import { Icon } from "semantic-ui-react";
 import BasicLayout from "../layouts/BasicLayout";
 import ChangeNameForm from "../components/Account/ChangeNameForm";
 import ChangeEmailForm from "../components/Account/ChangeEmailForm";
 import ChangePasswordForm from "../components/Account/ChangePasswordForm";
+import BasicModal from "../components/Modal/BasicModal";
+import AddressForm from "../components/Account/AddressForm";
+import ListAddress from "../components/Account/ListAddress";
 
 export default function Account() {
    const [user, setUser] = useState(undefined);
@@ -39,6 +43,7 @@ export default function Account() {
       return (
          <BasicLayout>
             <Configuration user={user} logout={logout} setReloadUser={setReloadUser} />
+            <Addresses />
          </BasicLayout>
       );
    }
@@ -57,6 +62,47 @@ function Configuration({ user, logout, setReloadUser }) {
                // no se pasa el setReloadUser porque no hay nada que actualizar en la pantalla
             />
          </div>
+      </div>
+   );
+}
+
+function Addresses() {
+   const [showModal, setShowModal] = useState(false);
+   const [titleModal, setTitleModal] = useState("");
+   const [formModal, setFormModal] = useState(null);
+   const [reloadAddreses, setReloadAddreses] = useState(false);
+
+   const openModal = (title, address) => {
+      setTitleModal(title);
+      setFormModal(
+         <AddressForm
+            setShowModal={setShowModal}
+            setReloadAddreses={setReloadAddreses}
+            // Para que se muestre si tiene o no contenido: (lesson 87)
+            newAddress={address ? false : true}
+            address={address || null}
+         />
+      );
+      setShowModal(true);
+   };
+
+   return (
+      <div className="account__addresses">
+         <div className="title">
+            Direcciones
+            <Icon name="plus" link onClick={() => openModal("Agregar Nueva Dirección:")} />
+         </div>
+         <div className="data">
+            <ListAddress
+               reloadAddreses={reloadAddreses}
+               setReloadAddreses={setReloadAddreses}
+               // openModal es para que pueda editar la dirección: (lesson 87)
+               openModal={openModal}
+            />
+         </div>
+         <BasicModal show={showModal} setShow={setShowModal} title={titleModal}>
+            {formModal}
+         </BasicModal>
       </div>
    );
 }
