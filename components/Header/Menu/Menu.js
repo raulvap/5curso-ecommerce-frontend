@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Container, Menu, Grid, Icon, Label } from "semantic-ui-react";
+import { map } from "lodash";
 
 // --- HOOKS ---
 import useAuth from "../../../hooks/useAuth";
 
 // --- API ---
 import { getMeApi } from "../../../api/user";
+import { getPlatformsApi } from "../../../api/platform";
 
 // --- COMPONENTS ---
+import { Container, Menu, Grid, Icon } from "semantic-ui-react";
 import BasicModal from "../../Modal/BasicModal";
 import Auth from "../../Auth";
 
@@ -16,6 +18,9 @@ export default function MenuWeb() {
    const [showModal, setShowModal] = useState(false);
    const [titleModal, setTitleModal] = useState("Iniciar Sesión");
    const [user, setUser] = useState(undefined);
+   const [platforms, setPlatforms] = useState([]);
+
+   console.log(platforms);
 
    // Sacamos del auth la info: (lesson 61)
    const { auth, logout } = useAuth();
@@ -28,6 +33,14 @@ export default function MenuWeb() {
       })();
    }, [auth]);
 
+   useEffect(() => {
+      // función async que se autollama para el menu de las plataformas: (Lesson 90)
+      (async () => {
+         const response = await getPlatformsApi();
+         setPlatforms(response);
+      })();
+   }, []);
+
    const onShowModal = () => setShowModal(true);
    const onCloseModal = () => setShowModal(false);
 
@@ -36,7 +49,7 @@ export default function MenuWeb() {
          <Container>
             <Grid>
                <Grid.Column className="menu__left" width={6}>
-                  <MenuPlatforms />
+                  <MenuPlatforms platforms={platforms} />
                </Grid.Column>
                <Grid.Column className="menu__right" width={10}>
                   {user !== undefined && (
@@ -55,18 +68,16 @@ export default function MenuWeb() {
 }
 
 // Menu web (lesson 42) (*Menu Item as="a" hace que se comporte como un link)
-function MenuPlatforms() {
+function MenuPlatforms({ platforms }) {
    return (
       <Menu>
-         <Link href="/play-station">
-            <Menu.Item as="a">PlayStation</Menu.Item>
-         </Link>
-         <Link href="/play-station">
-            <Menu.Item as="a">Xbox</Menu.Item>
-         </Link>
-         <Link href="/play-station">
-            <Menu.Item as="a">Nintendo</Menu.Item>
-         </Link>
+         {map(platforms, (item) => (
+            <Link href={`/games/${item.url}`} key={item.id}>
+               <Menu.Item as="a" name={item.url}>
+                  {item.title}
+               </Menu.Item>
+            </Link>
+         ))}
       </Menu>
    );
 }
