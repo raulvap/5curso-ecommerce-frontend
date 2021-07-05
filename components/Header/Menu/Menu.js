@@ -20,8 +20,6 @@ export default function MenuWeb() {
    const [user, setUser] = useState(undefined);
    const [platforms, setPlatforms] = useState([]);
 
-   console.log(platforms);
-
    // Sacamos del auth la info: (lesson 61)
    const { auth, logout } = useAuth();
 

@@ -8,6 +8,8 @@
 
 // --- PAGES ---
 @import "../pages/account.scss";
+@import "../pages/index.scss";
+@import "../pages/games/platform.scss";
 
 // --- COMPONENTS ---
 @import "../components/Header/Header.scss";
@@ -15,6 +17,7 @@
 @import "../components/Header/Menu/Menu.scss";
 @import "../components/Modal/BasicModal/BasicModal.scss";
 @import "../components/Auth/LoginForm/LoginForm.scss";
+@import "../components/Pagination/Pagination.scss";
 
 // --- ACCOUNT ---
 @import "../components/Account/ChangeNameForm/ChangeNameForm.scss";
@@ -22,3 +25,6 @@
 @import "../components/Account/ChangePasswordForm/ChangePasswordForm.scss";
 @import "../components/Account/AddressForm/AddressForm.scss";
 @import "../components/Account/ListAddress/ListAddress.scss";
+
+// --- LIST GAMES ---
+@import "../components//ListGames/ListGames.scss";

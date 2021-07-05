@@ -1,10 +1,41 @@
+import React, { useState, useEffect } from "react";
+import { size } from "lodash";
+
+// --- API ---
+import { getLastGamesApi } from "../api/game";
+
+// --- COMPONENTS ---
+import { Loader } from "semantic-ui-react";
 import BasicLayout from "../layouts/BasicLayout";
+import ListGames from "../components/ListGames";
 
 export default function Home() {
+   const [games, setGames] = useState(null);
+   console.log(games);
+
+   useEffect(() => {
+      // creamos una función async que se autollame para que nos traiga los últimos juegos (lesson 93)
+      (async () => {
+         const response = await getLastGamesApi(10);
+         // comprobamos que al menos haya 1 juego: (size viene de lodash)
+         if (size(response) > 0) {
+            setGames(response);
+         } else {
+            setGames([]);
+         }
+      })();
+   }, []);
+
    return (
       <BasicLayout>
          <div className="home">
-            <h1>This is Home</h1>
+            {!games && <Loader active>Cargando información...</Loader>}
+            {games && size(games) === 0 && (
+               <div>
+                  <h3>No hay juegos cargados</h3>
+               </div>
+            )}
+            {size(games) > 0 && <ListGames games={games} />}
          </div>
       </BasicLayout>
    );
