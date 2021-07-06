@@ -11,7 +11,6 @@ import ListGames from "../components/ListGames";
 
 export default function Home() {
    const [games, setGames] = useState(null);
-   console.log(games);
 
    useEffect(() => {
       // creamos una función async que se autollame para que nos traiga los últimos juegos (lesson 93)
