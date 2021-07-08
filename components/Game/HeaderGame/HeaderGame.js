@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { size } from "lodash";
+import { isFavoriteApi, addFavoriteApi, deleteFavoriteApi } from "../../../api/favorite";
+import useAuth from "../../../hooks/useAuth";
 import { Grid, Image, Icon, Button } from "semantic-ui-react";
+import classNames from "classnames";
 
 export default function HeaderGame({ game }) {
    const { poster } = game;
@@ -19,19 +22,57 @@ export default function HeaderGame({ game }) {
 
 function InfoGame({ game }) {
    const { title, summary, price, discount, url } = game;
+   const [isFavorite, setIsFavorite] = useState(false);
+   const [reloadFavorite, setReloadFavorite] = useState(false);
+   const { auth, logout } = useAuth();
+
+   useEffect(() => {
+      // función async autoejecutable:
+      if (auth) {
+         (async () => {
+            // función api para obtner info de la base de datos (lesson 113)
+            const response = await isFavoriteApi(auth.idUser, game.id, logout);
+            if (size(response) > 0) setIsFavorite(true);
+            else setIsFavorite(false);
+         })();
+         setReloadFavorite(false);
+      } else {
+         setIsFavorite(false);
+         setReloadFavorite(false);
+         return null;
+      }
+   }, [game, reloadFavorite]);
+
+   const addFavorite = async () => {
+      if (auth) {
+         await addFavoriteApi(auth.idUser, game.id, logout);
+         setReloadFavorite(true);
+      }
+   };
+
+   const deleteFavorite = async () => {
+      if (auth) {
+         await deleteFavoriteApi(auth.idUser, game.id, logout);
+         setReloadFavorite(true);
+      }
+   };
 
    return (
       <>
          <div className="header-game__title">
             {title}
-            {/* <Icon
-        name={isFavorite ? "heart" : "heart outline"}
-        className={classNames({
-          like: isFavorite,
-        })}
-        link
-        onClick={isFavorite ? deleteFavorite : addFavorite}
-      /> */}
+            <Icon
+               name={isFavorite ? "heart" : "heart outline"}
+               className={
+                  // usames classNames para darle estilo: (lesson 113, min 10)
+                  // cuando isFavorite sea true, le pone la clase de like
+                  classNames({
+                     like: isFavorite,
+                  })
+               }
+               link
+               onClick={isFavorite ? deleteFavorite : addFavorite}
+            />
          </div>
          <div className="header-game__delivery">Entrega en 24/48h</div>
          <div className="header-game__summary" dangerouslySetInnerHTML={{ __html: summary }} />
@@ -43,7 +84,7 @@ function InfoGame({ game }) {
                   <p>
                      $
                      {
-                        // para calcular el precio con descuento:
+                        // para calcular el precio con descuento, redondeado a 2 decimales
                         (price - Math.floor(price * discount) / 100).toFixed(2)
                      }
                   </p>

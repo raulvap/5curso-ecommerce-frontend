@@ -12,7 +12,7 @@ export default function InfoGame({ game }) {
          <div className="info-game__content">
             <div dangerouslySetInnerHTML={{ __html: game.summary }} />
             <div className="info-game__content-date">
-               <h4>Release Date:</h4>
+               <h4>Fecha de Lanzamiento:</h4>
                <p>{moment(game.releaseDate).format("LL")}</p>
             </div>
          </div>

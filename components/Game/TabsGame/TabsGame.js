@@ -2,21 +2,15 @@ import React from "react";
 import { Tab } from "semantic-ui-react";
 import InfoGame from "../InfoGame";
 
-export default function TabsGame({ game }) {
+export default function TabsGame(props) {
+   const { game } = props;
+
    const panes = [
       {
-         menutItem: "Información",
+         menuItem: "Información",
          render: () => (
             <Tab.Pane>
                <InfoGame game={game} />
-            </Tab.Pane>
-         ),
-      },
-      {
-         menutItem: "Comentarios",
-         render: () => (
-            <Tab.Pane>
-               <h1>Comentarios Tab</h1>
             </Tab.Pane>
          ),
       },

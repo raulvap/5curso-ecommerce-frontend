@@ -4,8 +4,8 @@
 import { createContext } from "react";
 
 const AuthContext = createContext({
-   // ********** este es el state que tenemos en toda la app: ********
    // **** este state tiene info de pages/_app.js ****
+   // ********** este es el state que tenemos en toda la app: ********
    auth: undefined,
    login: () => null,
    logout: () => null,
