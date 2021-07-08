@@ -30,26 +30,30 @@ function Logo() {
    );
 }
 
-// Componente de Buscador (lesson 41)
+// Componente de Buscador (lesson 41 y 120)
 function Search() {
-   //    const [searchStr, setSearchStr] = useState("");
-   //    const [load, setLoad] = useState(false);
-   //    const router = useRouter();
+   const [searchStr, setSearchStr] = useState("");
+   const [load, setLoad] = useState(false);
+   const router = useRouter();
 
-   //    useEffect(() => {
-   //       if (load) {
-   //          router.push(`/search?query=${searchStr}`);
-   //       }
-   //       setLoad(true);
-   //    }, [searchStr]);
+   useEffect(() => {
+      if (load) {
+         // va a mandar la dirección a donde se busque el juego
+         router.push(`/search?query=${searchStr}`);
+      }
+      setLoad(true);
+   }, [searchStr]);
 
    return (
       <Input
          id="search-game"
          icon={{ name: "search" }}
          placeholder="Buscar"
-         //  value={router.query.query}
-         //  onChange={(_, data) => setSearchStr(data.value)}
+         value={
+            // para que tenga el valor que estamos buscando (lesson 120)
+            router.query.query
+         }
+         onChange={(_, data) => setSearchStr(data.value)}
       />
    );
 }
