@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
-import { ToastContainer } from "react-toastify";
-import AuthContext from "../context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
+import AuthContext from "../context/AuthContext";
+import CartContext from "../context/CartContext";
+
 import { setToken, getToken, removeToken } from "../api/token";
+import { getProductsCart, addProductCart, countProductsCart, removeProductCart } from "../api/cart";
 
 // --- STYLES ---
 import "semantic-ui-css/semantic.min.css";
@@ -14,7 +17,9 @@ import "slick-carousel/slick/slick-theme.css";
 
 function MyApp({ Component, pageProps }) {
    const [auth, setAuth] = useState(undefined);
+   const [totalProductsCart, setTotalProductsCart] = useState(0);
    const [reloadUser, setReloadUser] = useState(false);
+   const [reloadCart, setReloadCart] = useState(false);
    const router = useRouter();
 
    useEffect(() => {
@@ -32,6 +37,12 @@ function MyApp({ Component, pageProps }) {
       }
       setReloadUser(false);
    }, [reloadUser]);
+
+   useEffect(() => {
+      // Este es para que cuanod la app se cargue, cuente los productos en el carrito: (lesson 126)
+      setTotalProductsCart(countProductsCart());
+      setReloadCart(false);
+   }, [auth, reloadCart]);
 
    const login = (token) => {
       // guardamos el Token en el localstorage: (lesson 58)
@@ -53,6 +64,30 @@ function MyApp({ Component, pageProps }) {
       }
    };
 
+   // Función para agregar productos al carrito, primero verificamos que esté loggueado: (lesson 125 )
+   const addProduct = (product) => {
+      const token = getToken();
+
+      if (token) {
+         addProductCart(product);
+         setReloadCart(true);
+      } else {
+         toast.warning("Debes iniciar sesión para agregar productos al carrito");
+      }
+   };
+
+   // Función para remover item del carrito (lesson 131)
+   const removeProduct = (product) => {
+      const token = getToken();
+
+      if (token) {
+         removeProductCart(product);
+         setReloadCart(true);
+      } else {
+         toast.warning("Debes iniciar sesión para agregar productos al carrito");
+      }
+   };
+
    const authData = useMemo(
       // Sirve para memorizar los datos (lesson 57)
       () => ({
@@ -65,23 +100,40 @@ function MyApp({ Component, pageProps }) {
       [auth]
    );
 
+   const cartData = useMemo(
+      // aqui vamos a usar la info del cart: (lesson 123)
+      () => ({
+         productsCart: totalProductsCart,
+         addProductCart: (product) => addProduct(product),
+         removeProductCart: (product) => removeProduct(product),
+         getProductsCart: getProductsCart,
+         removeAllProductsCart: () => null,
+      }),
+      [totalProductsCart]
+   );
+
    if (auth === undefined) return null;
 
    return (
+      // context para authentication:
       <AuthContext.Provider value={authData}>
-         <Component {...pageProps} />
-         <ToastContainer
-            // Lesson 53: usamos esto para notificaciones
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable
-            pauseOnHover
-         />
+         {/* context para el carrito de compras: (lesson 123) */}
+         <CartContext.Provider value={cartData}>
+            {/* Toda la app: */}
+            <Component {...pageProps} />
+            <ToastContainer
+               // Lesson 53: usamos esto para notificaciones
+               position="top-right"
+               autoClose={5000}
+               hideProgressBar
+               newestOnTop
+               closeOnClick
+               rtl={false}
+               pauseOnFocusLoss={false}
+               draggable
+               pauseOnHover
+            />
+         </CartContext.Provider>
       </AuthContext.Provider>
    );
 }

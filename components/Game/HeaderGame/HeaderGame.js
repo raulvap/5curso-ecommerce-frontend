@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { size } from "lodash";
 import { isFavoriteApi, addFavoriteApi, deleteFavoriteApi } from "../../../api/favorite";
 import useAuth from "../../../hooks/useAuth";
+import useCart from "../../../hooks/useCart";
 import { Grid, Image, Icon, Button } from "semantic-ui-react";
 import classNames from "classnames";
 
@@ -25,6 +26,7 @@ function InfoGame({ game }) {
    const [isFavorite, setIsFavorite] = useState(false);
    const [reloadFavorite, setReloadFavorite] = useState(false);
    const { auth, logout } = useAuth();
+   const { addProductCart } = useCart();
 
    useEffect(() => {
       // función async autoejecutable:
@@ -92,7 +94,10 @@ function InfoGame({ game }) {
             </div>
             <Button
                className="header-game__buy-btn"
-               // onClick={() => addProductCart(url)}
+               onClick={
+                  // Pasamos la url al context de useCart (lesson 125)
+                  () => addProductCart(url)
+               }
             >
                Comprar
             </Button>

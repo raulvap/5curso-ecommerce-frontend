@@ -5,3 +5,6 @@ export const BASE_PATH = "http://localhost:1337";
 
 // Token (lesson 58)
 export const TOKEN = "token";
+
+// Constante de Cart
+export const CART = "cart";

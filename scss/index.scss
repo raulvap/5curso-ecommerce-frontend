@@ -1,4 +1,4 @@
-//Lesson 37: aqui vamos a importar todos los scss::after
+//Lesson 37: aqui vamos a importar todos los scss:
 
 // --- COLORS ---
 @import "./color.scss";
@@ -12,6 +12,7 @@
 @import "../pages/games/platform.scss";
 @import "../pages/wishlist.scss";
 @import "../pages/search.scss";
+@import "../pages/cart.scss";
 
 // --- GENERAL COMPONENTS ---
 @import "../components/Header/Header.scss";
@@ -36,3 +37,7 @@
 @import "../components/Game/TabsGame/TabsGame.scss";
 @import "../components/Game/InfoGame/InfoGame.scss";
 @import "../components/Game/CarouselScreenshots/CarouselScreenshots.scss";
+
+// --- CART ---
+@import "../components/Cart/SummaryCart/SummaryCart.scss";
+@import "../components/Cart/AddressShipping/AddressShipping.scss";

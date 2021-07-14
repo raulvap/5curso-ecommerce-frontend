@@ -4,13 +4,14 @@ import { map } from "lodash";
 
 // --- HOOKS ---
 import useAuth from "../../../hooks/useAuth";
+import useCart from "../../../hooks/useCart";
 
 // --- API ---
 import { getMeApi } from "../../../api/user";
 import { getPlatformsApi } from "../../../api/platform";
 
 // --- COMPONENTS ---
-import { Container, Menu, Grid, Icon } from "semantic-ui-react";
+import { Container, Menu, Grid, Icon, Label } from "semantic-ui-react";
 import BasicModal from "../../Modal/BasicModal";
 import Auth from "../../Auth";
 
@@ -82,6 +83,9 @@ function MenuPlatforms({ platforms }) {
 
 // Menu Usuario
 function MenuOptions({ onShowModal, user, logout }) {
+   // Sacamos del context el hook del cart (lesson 126)
+   const { productsCart } = useCart();
+
    return (
       <Menu>
          {user ? (
@@ -107,6 +111,11 @@ function MenuOptions({ onShowModal, user, logout }) {
                <Link href="/cart">
                   <Menu.Item as="a" className="m-0">
                      <Icon name="cart" />
+                     {productsCart > 0 && (
+                        <Label color="red" floating circular>
+                           {productsCart}
+                        </Label>
+                     )}
                   </Menu.Item>
                </Link>
                <Menu.Item onClick={logout} className="m-0">

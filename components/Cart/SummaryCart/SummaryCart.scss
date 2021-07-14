@@ -1,0 +1,55 @@
+.summary-cart {
+   padding: 40px 10px;
+
+   .title {
+      width: max-content;
+      background-color: $background-dark-absolute;
+      color: $font-light;
+      padding: 5px 10px;
+      border-radius: 5px 5px 0 0;
+   }
+
+   .data {
+      background-color: $background-light;
+      box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+      padding: 15px;
+   }
+
+   &__product {
+      // td es el contenido de la celda: table.cell
+      // https://www.w3schools.com/tags/tag_td.asp#:~:text=The%20tag%20defines%20a,with%20the%20element)
+      td {
+         text-align: center !important;
+
+         // la primer celda:
+         &:first-of-type {
+            display: flex !important;
+            align-items: center;
+
+            img {
+               height: 100px;
+               padding-right: 20px;
+            }
+         }
+      }
+   }
+
+   &__resume {
+      td {
+         &:last-of-type {
+            text-align: center !important;
+         }
+      }
+
+      .total-price {
+         color: $primary;
+         font-weight: bold;
+         font-size: 20px;
+      }
+
+      .clear {
+         border-bottom: 1px solid $border-light !important;
+         border-left: 1px solid $border-light !important;
+      }
+   }
+}
