@@ -72,10 +72,12 @@ export function removeProductCart(product) {
    }
 }
 
+// función para hacer el pago a Stripe (lesson 142)
 export async function paymentCartApi(token, products, idUser, address, logout) {
+   // el token es el acuerdo de pago que genera stripe
    try {
       const addressShipping = address;
-      delete addressShipping.user;
+      delete addressShipping.users_permissions_user;
       delete addressShipping.createdAt;
 
       const url = `${BASE_PATH}/orders`;
@@ -99,6 +101,7 @@ export async function paymentCartApi(token, products, idUser, address, logout) {
    }
 }
 
+// Función para quitar todos los items del carrito cunando paga (Lesson 143)
 export function removeAllProductsCart() {
    localStorage.removeItem(CART);
 }

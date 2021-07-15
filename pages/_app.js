@@ -2,11 +2,20 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
+
+// --- CONTEXT ---
 import AuthContext from "../context/AuthContext";
 import CartContext from "../context/CartContext";
 
+// --- API ---
 import { setToken, getToken, removeToken } from "../api/token";
-import { getProductsCart, addProductCart, countProductsCart, removeProductCart } from "../api/cart";
+import {
+   getProductsCart,
+   addProductCart,
+   countProductsCart,
+   removeProductCart,
+   removeAllProductsCart,
+} from "../api/cart";
 
 // --- STYLES ---
 import "semantic-ui-css/semantic.min.css";
@@ -107,7 +116,7 @@ function MyApp({ Component, pageProps }) {
          addProductCart: (product) => addProduct(product),
          removeProductCart: (product) => removeProduct(product),
          getProductsCart: getProductsCart,
-         removeAllProductsCart: () => null,
+         removeAllProductsCart,
       }),
       [totalProductsCart]
    );

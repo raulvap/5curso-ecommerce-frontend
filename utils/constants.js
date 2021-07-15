@@ -8,3 +8,7 @@ export const TOKEN = "token";
 
 // Constante de Cart
 export const CART = "cart";
+
+// Constante del token para Stripe: (lesson 138)
+export const STRIPE_TOKEN =
+   "pk_test_51IfxWbGBFKzQA2LfP9F9botOEdFrHSDKyOpYjqkNzp0qKrU0rBIparzJORFS4PvCri93iI30NxoEmTMdOBZX0JyV00gNQrfJvJ";

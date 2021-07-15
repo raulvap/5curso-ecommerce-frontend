@@ -10,6 +10,7 @@ import useCart from "../hooks/useCart";
 import BasicLayout from "../layouts/BasicLayout";
 import SummaryCart from "../components/Cart/SummaryCart";
 import AddressShipping from "../components/Cart/AddressShipping";
+import Payment from "../components/Cart/Payment";
 
 export default function cart() {
    const { getProductsCart } = useCart();
@@ -57,6 +58,10 @@ function FullCart({ products }) {
             setReloadCart={setReloadCart}
          />
          <AddressShipping setAddress={setAddress} />
+         {
+            // Para hacer los pagos, se necesita la direaccion: (lesson 138)
+            address && <Payment products={productsData} address={address} />
+         }
       </BasicLayout>
    );
 }
