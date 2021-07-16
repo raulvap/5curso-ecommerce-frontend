@@ -13,6 +13,7 @@
 @import "../pages/wishlist.scss";
 @import "../pages/search.scss";
 @import "../pages/cart.scss";
+@import "../pages/orders.scss";
 
 // --- GENERAL COMPONENTS ---
 @import "../components/Header/Header.scss";
@@ -43,3 +44,6 @@
 @import "../components/Cart/AddressShipping/AddressShipping.scss";
 @import "../components/Cart/Payment/Payment.scss";
 @import "../components/Cart/Payment/FormPayment/FormPayment.scss";
+
+// --- ORDER ---
+@import "../components/Orders/Order/Order.scss";
