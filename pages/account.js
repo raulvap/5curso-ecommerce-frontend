@@ -16,6 +16,7 @@ import ChangePasswordForm from "../components/Account/ChangePasswordForm";
 import BasicModal from "../components/Modal/BasicModal";
 import AddressForm from "../components/Account/AddressForm";
 import ListAddress from "../components/Account/ListAddress";
+import Seo from "../components/Seo";
 
 export default function Account() {
    const [user, setUser] = useState(undefined);
@@ -42,6 +43,7 @@ export default function Account() {
    } else {
       return (
          <BasicLayout>
+            <Seo title="Mi cuenta" />
             <Configuration user={user} logout={logout} setReloadUser={setReloadUser} />
             <Addresses />
          </BasicLayout>

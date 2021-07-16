@@ -8,8 +8,10 @@ import { getLastGamesApi } from "../api/game";
 import { Loader } from "semantic-ui-react";
 import BasicLayout from "../layouts/BasicLayout";
 import ListGames from "../components/ListGames";
+import Seo from "../components/Seo";
 
 export default function Home() {
+   // ESTA ES LA PÁGINA DE INICIO
    const [games, setGames] = useState(null);
 
    useEffect(() => {
@@ -28,6 +30,8 @@ export default function Home() {
    return (
       <BasicLayout>
          <div className="home">
+            <Seo />
+
             {!games && <Loader active>Cargando información...</Loader>}
             {games && size(games) === 0 && (
                <div>

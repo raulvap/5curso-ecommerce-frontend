@@ -11,6 +11,7 @@ import BasicLayout from "../layouts/BasicLayout";
 import SummaryCart from "../components/Cart/SummaryCart";
 import AddressShipping from "../components/Cart/AddressShipping";
 import Payment from "../components/Cart/Payment";
+import Seo from "../components/Seo";
 
 export default function cart() {
    const { getProductsCart } = useCart();
@@ -23,6 +24,7 @@ export default function cart() {
 function EmptyCart() {
    return (
       <BasicLayout className="empty-cart">
+         <Seo />
          <h2>No hay productos en el carrito</h2>
       </BasicLayout>
    );

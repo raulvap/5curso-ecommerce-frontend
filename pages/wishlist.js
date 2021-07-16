@@ -5,6 +5,7 @@ import useAuth from "../hooks/useAuth";
 import { Loader } from "semantic-ui-react";
 import BasicLayout from "../layouts/BasicLayout";
 import ListGames from "../components/ListGames";
+import Seo from "../components/Seo";
 
 export default function wishlist() {
    const [games, setGames] = useState(null);
@@ -28,6 +29,7 @@ export default function wishlist() {
 
    return (
       <BasicLayout className="wishlist">
+         <Seo title="Mis Favoritos" description="Listado de tus juegos favoritos" />
          <div className="wishlist__block">
             <div className="title">Favoritos</div>
             <div className="data">

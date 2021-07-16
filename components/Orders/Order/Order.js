@@ -35,6 +35,7 @@ export default function Order(props) {
                </div>
             </div>
          </div>
+         {/* Es el componente del Modal: (Lesson 148) */}
          <AddressModal
             showModal={showModal}
             setShowModal={setShowModal}

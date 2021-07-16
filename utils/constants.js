@@ -1,7 +1,9 @@
 // Información constante de la app: (lesson 52)
 
-// url de Desarrollo de STRAPI:
-export const BASE_PATH = "http://localhost:1337";
+// ******* url de Desarrollo de STRAPI: *******
+// export const BASE_PATH = "http://localhost:1337";
+// ******* url de Producción de Heroku/AWS/Azure: *******
+export const BASE_PATH = "http://ecommerce-game.herokuapp.com";
 
 // Token (lesson 58)
 export const TOKEN = "token";

@@ -5,7 +5,7 @@ import { size } from "lodash";
 import { searchGamesApi } from "../api/game";
 import BasicLayout from "../layouts/BasicLayout";
 import ListGames from "../components/ListGames";
-// import Seo from "../components/Seo";
+import Seo from "../components/Seo";
 
 export default function search() {
    const [games, setGames] = useState(null);
@@ -33,7 +33,7 @@ export default function search() {
 
    return (
       <BasicLayout className="search">
-         {/* <Seo title={`Buscando: ${query.query}`} /> */}
+         <Seo title={`Buscando: ${query.query}`} />
          {!games && <Loader active>Buscando juegos...</Loader>}
          {games && size(games) === 0 && (
             <div>
