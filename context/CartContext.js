@@ -10,4 +10,4 @@ const CartContext = createContext({
 });
 
 export default CartContext;
-// Ahora el siguiente paso es crear el hook que va a utilzar este context con sus parámetros
+// Ahora el siguiente paso es crear el hook (hooks/useCart) que va a utilzar este context con sus parámetros

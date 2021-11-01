@@ -7,7 +7,7 @@ export async function authFetch(url, params, logout) {
 
    if (!token) {
       // Usuario no loggueado
-      // toast.error("Debes inciar sesión");
+      toast.error("Debes inciar sesión");
       logout();
    } else {
       // comprobar que el token es válido:

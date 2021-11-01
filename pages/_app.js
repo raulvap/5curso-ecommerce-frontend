@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }) {
    }, [reloadUser]);
 
    useEffect(() => {
-      // Este es para que cuanod la app se cargue, cuente los productos en el carrito: (lesson 126)
+      // Este es para que cuando la app se cargue, cuente los productos en el carrito: (lesson 126)
       setTotalProductsCart(countProductsCart());
       setReloadCart(false);
    }, [auth, reloadCart]);
